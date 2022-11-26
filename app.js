@@ -8,6 +8,13 @@ const range = document.getElementById("jsRange");
 const check = document.getElementById("jsCheck");
 const customColor = document.querySelector("#jsColorCustom");
 
+
+//투명도
+const opacity = document.getElementById("jsOpacity");
+// // //error 폰트,사이즈
+const s_txtsize = document.getElementById(".jstxtsize");
+const s_txtfont = document.getElementById(".jstxtfont");
+
 // 마우스커서
 const mouseCursor = document.querySelector(".cursor");
 const cursorRange = document.querySelector(".cursor_range");
@@ -285,10 +292,22 @@ function handleCColorChange(event) {
 function handleRangeChange(event) {
   const size = event.target.value;
   ctx.lineWidth = size;
+  //sy 위치에 따라 check 사이즈도 변경
+  check.style.width = size * CURSOR_RANGE_CTRL + "em";
+  check.style.height = size * CURSOR_RANGE_CTRL + "em";
+  //sy
   cursorRange.style.width = size * CURSOR_RANGE_CTRL + "rem";
   cursorRange.style.height = size * CURSOR_RANGE_CTRL + "rem";
 }
-
+//sy opacity
+function handleOpacityChange(event) {
+  const opacity = event.target.value;
+  ctx.globalAlpha = opacity;
+  ctx.strokeStyle = rgba(color_r, color_g, color_b, opacity);
+  check.style.opacity = opacity;
+  cursorRange.style.opacity = opacity;
+}
+//sy
 // 저장(png로)
 function handleCM(event) {
   event.preventDefault();
@@ -378,7 +397,11 @@ if (customColor) {
 if (range) {
   range.addEventListener("input", handleRangeChange);
 }
-
+//sy opacity
+if (opacity) {
+  opacity.addEventListener("input", handleOpacityChange);
+}
+//sy
 // 그림판 크기
 if (widthForm) {
   widthForm.addEventListener("submit", handleCanvasWidth);
